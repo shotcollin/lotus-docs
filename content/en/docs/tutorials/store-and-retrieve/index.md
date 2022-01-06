@@ -204,11 +204,11 @@ There are two parts to a Filecoin address: the public address and the private ke
 
 1. Make a note of this address. We'll use it in an upcoming section.
 
-### Backup your address
+### Back up your address
 
-Your address is made up of two parts: your _public address_ and your _private key_. The public address is what you see when you run `lotus wallet new`, and you're safe to share that address with whoever you want. Your private key, however, must be kept secret and secure. If you lose your private key, you lose access to any FIL stored in that address.
+Your address is made up of two parts: your _public address_ and your _private key_. The public address is what you see when you run `lotus wallet new`, and you're safe to share that address with whomever you want. Your private key, however, must be kept secret and secure. If you lose your private key, you lose access to any FIL stored in that address.
 
-It is incredibly important that you backup your addreses. Storing a copy of your addresses on another device is a great way to ensure you don't lose access to your funds.
+It is incredibly important that you back up your address, including the private key. Storing a copy of your private key on another secure, non-public device is a great way to ensure you don't lose access to your funds.
 
 1. If your public address `f1...` is still in the terminal window, copy it to your clipboard. If not, list the addresses associated with your Lotus node and copy your public address:
 
