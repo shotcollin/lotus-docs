@@ -6,7 +6,7 @@ menu:
     lotus:
          parent: "lotus-install"
          identifier: "lotus-install-macos"
-weight: 130
+weight: 215
 toc: true
 ---
 
@@ -27,9 +27,9 @@ You can quickly install Lotus using Homebrew on macOS.
 
 1. Add the `filecoin-project/lotus` tap:
 
-   ```shell
-   brew tap filecoin-project/lotus
-   ```
+    ```shell
+    brew tap filecoin-project/lotus
+    ```
 
 1. Install Lotus:
 
@@ -56,19 +56,18 @@ Lotus requires that X-Code CLI tools be installed before building the Lotus bina
     ```shell
     xcode-select -p
     ```
-    ```
+
+    This should output something like:
+
+    ```plaintext
     /Library/Developer/CommandLineTools
     ```
 
-    If this command returns a path, then you have Xcode already installed! You can [move on to installing dependencies with Homebrew](#homebrew).
+    If this command returns a path, then you have Xcode already installed! You can [move on to installing dependencies with Homebrew](#homebrew). If the above command doesn't return a path, install Xcode:
 
-   {{< alert icon="warning">}}
-   If the above command doesn't return a path, install Xcode:
-
-   ```shell
-   xcode-select --install
-   ```
-   {{< /alert >}}
+    ```shell
+    xcode-select --install
+    ```
 
 Next up is installing Lotus' dependencies using Homebrew.
 
@@ -79,20 +78,18 @@ We recommend that macOS users use [Homebrew](https://brew.sh) to install each of
 1. Use the command `brew install` to install the following packages:
 
    ```shell
-   brew install go bzr jq pkg-config rustup hwloc coreutils
+   brew install go bzr jq pkg-config hwloc coreutils
    ```
 
 Next up is cloning the Lotus repository and building the executables.
 
 #### Rust
 
-We need to download and install the official compiler for the Rust programming language, and its package manager, Cargo.
+Rustup is an installer for the systems programming language Rust. Run the installer and follow the onscreen prompts. The default installation option should be chosen unless you are familiar with customisation:
 
 ```shell
-rustup-init
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
-
-Follow the prompts to install Rust. The default installation option should be chosen unless you are familiar with customisation.
 
 ### Build and install Lotus
 
@@ -109,26 +106,20 @@ These instructions are for installing Lotus on an M1-based Mac. If you have an I
 
 1. Clone the repository:
 
-   ```shell
-   git clone https://github.com/filecoin-project/lotus.git
-   cd lotus/
-   ```
+    ```shell
+    git clone https://github.com/filecoin-project/lotus.git
+    cd lotus/
+    ```
 
-1. Run `git checkout <RELEASE TAG>` to checkout to the latest Lotus release:
+1. Switch to the latest stable release branch:
 
-   ```shell
-   git checkout <tag_or_release>
-   # For example:
-   git checkout <vX.X.X> # tag for a release
-   ```
+    ```shell
+    git checkout releases
+    ```
 
-    You can use any tag listed on the [Lotus GitHub release page](https://github.com/filecoin-project/lotus/releases) to checkout to that specific release.
+    The `releases` branch always contains the latest stable release for Lotus. If you want to checkout to a network other than mainnet, take a look at the [Switching networks guide →]({{< relref "switch-networks" >}})
 
-{{< alert icon="tip">}}
-If you want to checkout to a network other than mainnet, take a look at the [Switching networks guide →]({{< relref "switch-networks" >}})
-{{< /alert >}}
-
-3. Create necessary environment variable to allow Lotus to run on ARM architecture:
+1. Create necessary environment variable to allow Lotus to run on ARM architecture:
 
     ```shell
     export LIBRARY_PATH=/opt/homebrew/lib
@@ -158,42 +149,36 @@ These instructions are for installing Lotus on an Intel or AMD-based Mac. If you
 
 1. Clone the repository:
 
-   ```shell
-   git clone https://github.com/filecoin-project/lotus.git
-   cd lotus/
-   ```
+    ```shell
+    git clone https://github.com/filecoin-project/lotus.git
+    cd lotus/
+    ```
 
-1. Run `git checkout <RELEASE TAG>` to checkout to the latest Lotus release:
+1. Switch to the latest stable release branch:
 
     ```shell
-   git checkout <tag_or_release>
-   # For example:
-   git checkout <vX.X.X> # tag for a release
-   ```
+    git checkout releases
+    ```
 
-    You can use any tag listed on the [Lotus GitHub release page](https://github.com/filecoin-project/lotus/releases) to checkout to that specific release.
-
-    {{< alert icon="tip">}}
-    If you want to checkout to a network other than mainnet, take a look at the [Switching networks guide →]({{< relref "switch-networks" >}})
-    {{< /alert >}}
+    The `releases` branch always contains the latest stable release for Lotus. If you want to checkout to a network other than mainnet, take a look at the [Switching networks guide →]({{< relref "switch-networks" >}})
 
 1. If you are in China, take a look at some [tips for running Lotus in China]({{< relref "nodes-in-china" >}})".
 1. Some older Intel and AMD processors without the ADX instruction support may panic with illegal instruction errors. To fix this, add the `CGO_CFLAGS` environment variable:
 
-   ```shell
-   export CGO_CFLAGS_ALLOW="-D__BLST_PORTABLE__"
-   export CGO_CFLAGS="-D__BLST_PORTABLE__"
-   export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
-   ```
+    ```shell
+    export CGO_CFLAGS_ALLOW="-D__BLST_PORTABLE__"
+    export CGO_CFLAGS="-D__BLST_PORTABLE__"
+    export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
+    ```
 
-   This is due to a Lotus bug that prevents Lotus from running on a processor without `adx` instruction support, and should be fixed soon.
+    This is due to a Lotus bug that prevents Lotus from running on a processor without `adx` instruction support, and should be fixed soon.
 
 1. Build and install Lotus:
 
-   ```shell
-   make clean && make all
-   sudo make install
-   ```
+    ```shell
+    make clean && make all
+    sudo make install
+    ```
 
 1. You should now have Lotus installed. You can now [start the Lotus daemon](#start-the-lotus-daemon-and-sync-the-chain).
 
@@ -259,12 +244,13 @@ For example, after your Lotus daemon has been running for a few minutes, use `lo
 ```shell
 lotus net sync
 ```
-```
+
+```plaintext
 sync status:
 ...
-	Target:	[bafy2bzaceaki6bjhe2lxmtyexcff6vh5y5uw4tmbjr3gatwvh5dhaqqb2ykaa] (320791)
-	Stage: complete
-	Height: 320791
+    Target: [bafy2bzaceaki6bjhe2lxmtyexcff6vh5y5uw4tmbjr3gatwvh5dhaqqb2ykaa] (320791)
+    Stage: complete
+    Height: 320791
 ...
 ```
 
@@ -273,7 +259,8 @@ Or use `lotus net` to check the number of other peers that it is connected to in
 ```shell
 lotus net peers
 ```
-```
+
+```plaintext
 12D3KooWSDqWSDNZtpJae15FBGpJLeLmyabUfZmWDWEjqEGtUF8N, [/ip4/58.144.221.27/tcp/33425]
 12D3KooWRTQoDUhWVZH9z5u9XmaFDvFw14YkcW7dSBFJ8CuzDHnu, [/ip4/67.212.85.202/tcp/10906]
 ```
@@ -283,7 +270,8 @@ Or check the current version of your Lotus node as well as network.
 ```shell
 lotus version
 ```
-```
+
+```plaintext
 Daemon:  1.13.0+calibnet+git.7a55e8e89+api1.4.0
 Local: lotus version 1.13.0+calibnet+git.7a55e8e89
 # running lotus v1.13.0 on Calibration testnet

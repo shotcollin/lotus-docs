@@ -10,7 +10,7 @@ menu:
 aliases:
     - /docs/storage-providers/lifecycle/
     - /storage-providers/configure/lifecycle/
-weight: 455
+weight: 385
 toc: true
 ---
 
@@ -183,7 +183,7 @@ If you are planning to run maintenance on the Lotus node used by the miner, or i
 export FULLNODE_API_INFO=<api_token>:/ip4/<lotus_daemon_ip>/tcp/<lotus_daemon_port>/http
 ```
 
-Follow these steps to learn [how to obtain a token]({{< relref "../../developers/api-access#obtaining-tokens" >}}).
+Follow these steps to learn [how to obtain a token]({{< relref "reference/basics/api-access#api-tokens" >}}).
 
 3. If you have not exported your wallets yet, export them now from the old node and re-import them to the new Lotus node.
 4. Start the miner. It should now communicate with the new Lotus Node and, since it has the same wallets as the older one, it should be able to perform the necessary operations on behalf of the miner.

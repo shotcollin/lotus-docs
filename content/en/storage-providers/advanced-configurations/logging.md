@@ -6,7 +6,9 @@ draft: false
 menu:
     storage-providers:
         parent: "storage-providers-advanced-configurations"
-weight: 160
+aliases:
+    - /storage-providers/operate/journal/
+weight: 525
 toc: true
 ---
 
