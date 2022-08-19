@@ -26,6 +26,12 @@ document.addEventListener('click', function(event) {
 
 });
 
+// initialize bootstrap tooltips
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
 /*
 Source:
   - https://dev.to/shubhamprakash/trap-focus-using-javascript-6a3
@@ -95,7 +101,7 @@ Source:
 
   // https://discourse.gohugo.io/t/range-length-or-last-element/3803/2
 
-  {{ $list := (where .Site.Pages "Section" "docs") -}}
+  {{ $list := (.Site.Pages) -}}
   {{ $len := (len $list) -}}
 
   index.add(
