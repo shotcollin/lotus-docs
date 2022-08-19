@@ -4,3 +4,16 @@ resources
 # Local Netlify folder
 .netlify
 TODO
+assets/.DS_Store
+config/.DS_Store
+content/.DS_Store
+layouts/.DS_Store
+static/.DS_Store
+static/images/.DS_Store
+.DS_Store
+static/.DS_Store
+static/images/.DS_Store
+.DS_Store
+static/.DS_Store
+static/images/.DS_Store
+.DS_Store
