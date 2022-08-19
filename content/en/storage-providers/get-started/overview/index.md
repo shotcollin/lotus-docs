@@ -13,7 +13,11 @@ weight: 105
 toc: true
 ---
 
-This section contains guides to initialize and run a successful storage provider operation using Lotus and should be approached by **advanced users only**. You should read through and be familiar with the concepts outlined in these two articles: [how Filecoin works](https://docs.filecoin.io/about-filecoin/how-filecoin-works/), [how mining works](https://docs.filecoin.io/mine/how-mining-works/), as well as having a Lotus node running.
+This section contains guides to initialize and run a successful storage provider operation using Lotus and should be approached by **advanced users only**. You should read through and be familiar with the concepts outlined in these two articles: [how Filecoin works](https://docs.filecoin.io/about-filecoin/how-filecoin-works/), [how mining works](https://docs.filecoin.io/storage-provider/how-providing-works/), as well as having a Lotus node running.
+
+![High Level Full Lotus System](High-Level-Full-Lotus-System.png)
+
+At a high level, this section will cover documentation and guides about the `lotus-miner` and `lotus-worker` binaries, as well as how to use the built-in legacy lotus-markets. For documentation about Boost, you can check out the [Boost documentation](https://boost.filecoin.io)
 
 {{< alert icon="warning" >}}
 Being a storage provider on the _mainnet_ has stringent minimal **[hardware requirements]({{< relref "../../../storage-providers/get-started/hardware-requirements" >}})**. Do not attempt this installation if your server does not meet the minimum requirements.
@@ -41,7 +45,7 @@ A sector is the default unit of storage that storage providers submit to the Fil
 A sector can contain data from multiple deals and clients. A storage provider can also submit “Committed Capacity” (CC) sectors. CC sectors are available to the Filecoin network as committed storage power but do not initially contain storage deals. Actively proving CC sectors can be upgraded at a later date to include storage deals in a process known as Snap Deals.
 
 **Sealed sectors**
-An unsealed sector contains raw storage deal data. These sectors may optionally be retained if the client requires fast retrieval of their data.
+A sealed sector is a sector that has been encoded to prepare it for the continuous proving process.
 
 **Unsealed sectors**
 An unsealed sector is the raw data. Some clients request that their unsealed data is kept for fast retrievals.

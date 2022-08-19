@@ -39,12 +39,12 @@ These lightweight state snapshots **do not contain any message receipts**. To ge
     curl -sI https://fil-chain-snapshots-fallback.s3.amazonaws.com/mainnet/minimal_finality_stateroots_latest.car | perl -ne '/x-amz-website-redirect-location:\s(.+)\.car/ && print "$1.sha256sum\n$1.car"' | xargs wget
     ```
 
-    a. For **testnet**, use the [latest calibration network snapshot](https://www.mediafire.com/file/q7tc2bmcc9d09vv/lotus_cali_snapshot_2021_07_14_high_73770.car.tar.xz/file). Testnet snapshots are maintained by Filecoin community voluntarily, and may not be up-to-date. Please double check before using them.
+    b. For **testnet**, use the [latest calibration network snapshot](https://www.mediafire.com/file/gquphc7qw0ffzdk/lotus_cali_snapshot_2022_05_18_high_959844.car.tar.gz/file). Testnet snapshots are maintained by Filecoin community voluntarily, and may not be up-to-date. Please double check before using them.
 
     ```shell
-    curl -sI https://www.mediafire.com/file/q7tc2bmcc9d09vv/lotus_cali_snapshot_2021_07_14_high_73770.car.tar.xz/file
+    curl -sI https://www.mediafire.com/file/gquphc7qw0ffzdk/lotus_cali_snapshot_2022_05_18_high_959844.car.tar.gz/file
     ```
-    
+
 1. Check the `sha256sum` of the downloaded snapshot:
 
     ```shell with-output
@@ -71,7 +71,22 @@ We strongly recommend that you download and verify the checksum of the snapshot 
 ```shell
 lotus daemon --import-snapshot https://fil-chain-snapshots-fallback.s3.amazonaws.com/mainnet/minimal_finality_stateroots_latest.car
 ```
+
 {{< /alert >}}
+
+#### New Lightweight Snapshot Service
+
+We have soft launched a new Lightweight chain snapshot service which will be replacing the snapshots above in the future. More information about these snapshots can be found in [Notion](https://pl-strflt.notion.site/Lightweight-Filecoin-Chain-Snapshots-17e4c386f35c44548f5863afb7b5e024). These snapshots should be considered experimental during the soft launch and avoided for critical systems.
+
+**Mainnet**
+```shell
+lotus daemon --import-snapshot https://snapshots.mainnet.filops.net/minimal/latest
+```
+
+**Calibrationnet**
+```shell
+lotus daemon --import-snapshot https://snapshots.calibrationnet.filops.net/minimal/latest
+```
 
 ### Full chain snapshot
 
@@ -174,7 +189,7 @@ lotus daemon --import-chain <filename>
 If you do not want the daemon to start once the snapshot has finished, add the `--halt-after-import` flag:
 
 ```shell
-lotus daemon --import-snapshot --halt-after-import <filename>
+lotus daemon --halt-after-import --import-snapshot <filename>
 ```
 
 ## Compacting the chain data

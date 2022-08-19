@@ -119,6 +119,14 @@ lotus-miner info
 >     WinPoSt: 3
 ```
 
+### Stop the PoSt worker
+
+Use the `stop` command to stop the worker:
+
+```shell
+lotus-worker stop <flags>
+```
+
 ## Multiple partitions
 
 If you have multiple partitions in a single proving deadline and multiple windowPoSt workers, each partition will run on separate workers in parallel, up to the number of partitions.
@@ -133,6 +141,33 @@ deadline  partitions  sectors (faults)  proven partitions
 ```
 
 If the storage provider has four windowPoSt workers connected, the `lotus-miner` will compute each of the partitions on each of the workers in parallel. If one windowPoSt worker gets disconnected, leaving you with only three windowPoSt workers, the first three partitions will be computed in parallel. The first windowPoSt worker will pick up the last partition to finish its computation.
+
+Depending on the scale of your operation it may be necessary to fine-tune the proving processes of your storage provider. This is particularly true in the case of `DeclareFaultsRecovered` messages across multiple partitions. This is done in the `Proving` section of the Lotus Miner's `config.toml`:
+
+```toml
+[Proving]
+  # Maximum number of sector checks to run in parallel. (0 = unlimited)
+  #
+  # type: int
+  # env var: LOTUS_PROVING_PARALLELCHECKLIMIT
+  #ParallelCheckLimit = 128
+
+  # Setting this value above the network limit has no effect
+  #
+  # type: int
+  # env var: LOTUS_PROVING_MAXPARTITIONSPERPOSTMESSAGE
+  #MaxPartitionsPerPoStMessage = 0
+
+  # In some cases when submitting DeclareFaultsRecovered messages,
+  # there may be too many recoveries to fit in a BlockGasLimit.
+  # In those cases it may be necessary to set this value to something low (eg 1);
+  # Note that setting this value lower may result in less efficient gas use - more messages will be sent than needed,
+  # resulting in more total gas use (but each message will have lower gas limit)
+  #
+  # type: int
+  # env var: LOTUS_PROVING_MAXPARTITIONSPERRECOVERYMESSAGE
+  #MaxPartitionsPerRecoveryMessage = 0
+```
 
 ### Testing the setup
 
