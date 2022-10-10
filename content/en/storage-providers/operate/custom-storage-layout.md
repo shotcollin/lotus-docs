@@ -29,7 +29,7 @@ lotus-miner storage attach --init --seal <PATH_FOR_SEALING_STORAGE>
 
 ### Filter sector types
 
-You can filter for what sectors types are allowed in each sealing path by adjusting the configuration file in: `<path-to-storage>/sectorstorage.json`.
+As of version 1.17.1 you can filter for what sectors types are allowed in each sealing path by adjusting the configuration file in: `<path-to-storage>/sectorstorage.json`.
 
 ```json
 {
@@ -44,6 +44,18 @@ You can filter for what sectors types are allowed in each sealing path by adjust
   "DenyTypes": null
 }
 ```
+
+Valid values for `AllowTypes` and `DenyTypes` are:
+
+```
+"unsealed"
+"sealed"
+"cache"
+"update"
+"update-cache"
+```
+
+These values must be put in an array to be valid (e.g `"AllowTypes": ["unsealed", "update-cache"]`), any other values will generate an error on startup of the `lotus-miner`. A restart of the `lotus-miner` is also needed for changes to take effect. 
 
 ## Custom location for storing
 
@@ -83,7 +95,11 @@ Valid values for `AllowTypes` and `DenyTypes` are:
 "update-cache"
 ```
 
-Any other value will generate a warning and be ignored.
+These values must be put in an array to be valid (e.g `"AllowTypes": ["unsealed", "update-cache"]`), any other values will generate an error on startup of the `lotus-miner`. A restart of the `lotus-miner` is also needed for changes to take effect. 
+
+{{< alert icon="tip" >}}
+If you'd like to have a clear overview of the storage list, it is possible to edit the "ID": "1626519a-5e05-493b-aa7a-0af71612010b" <-> "ID": "Sealing-Server" in `sectorstorage.json`.
+{{< /alert >}}
 
 ### Seperate sealed and unsealed
 
@@ -104,28 +120,29 @@ You can see all your storage locations with the `lotus-miner storage list` comma
 
 ```shell
 lotus-miner storage list
-
-Sealing:
+```
+```output
+Sealing-Server:
 [##########                             ] 1.521 TiB/6.93 TiB 21%
-  Unsealed: 1; Sealed: 2; Caches: 2; Reserved: 0 B
+  Unsealed: 15; Sealed: 10; Caches: 10; Updated: 7; Update-caches: 7; Reserved: 1.007 TiB
   Weight: 10; Use: Seal 
   Local: /root/sealing
   URL: http://127.0.0.1:2345/remote
 
 Storage-Unsealed:
-[##############                         ] 23.61 TiB/96.64 TiB 24%
-  Unsealed: 411; Sealed: 0; Caches: 0; Reserved: 0 B
+[###########################            ] 326.8 TiB/420.2 TiB 77%
+  Unsealed: 6520; Sealed: 0; Caches: 0; Updated: 0; Update-caches: 0; Reserved: 0 B
   Weight: 10; Use: Store
   Allow Types: unsealed
-  Local: /root/storage3
+  Local: /root/storage2
   URL: http://127.0.0.1:2345/remote
 
 Storage-Sealed:
-[##############                         ] 27.61 TiB/96.64 TiB 28%
-  Unsealed: 0; Sealed: 471; Caches: 471; Reserved: 0 B
+[###########################            ] 326.8 TiB/420.2 TiB 77%
+  Unsealed: 0; Sealed: 5960; Caches: 5960; Updated: 560; Update-caches: 560; Reserved: 0 B
   Weight: 10; Use: Store
   Allow Types: sealed
-  Local: /root/storage2
+  Local: /root/storage3
   URL: http://127.0.0.1:2345/remote
 ```
 
@@ -135,18 +152,21 @@ You can detach a storage path with the `lotus-miner storage detach /path/to/stor
 
 ## Updating locations
 
-You can update sector locations with the `lotus-miner storage redeclare` command if you want to move sector data from one storage path to another storage path. If moving sectors to a storage path on a separate server it's recommended to use a utility like r sync or similar that has checksum on both ends. If moving data to a separate server, it is also good practice to keep the important sector files like sealed sectors and cache until you have passed the first windowPoSt with the new storage location.
+As of version 1.17.1 you can update sector locations without restarting the `lotus-miner` with the `lotus-miner storage redeclare` command if you want to move sector data from one storage path to another storage path. If moving sectors to a storage path on a separate server it's recommended to use a utility like r sync or similar that has checksum on both ends. If moving data to a separate server, it is also good practice to keep the important sector files like sealed sectors and cache until you have passed the first windowPoSt with the new storage location.
 
 1. To redeclare sector(s) in another storage path, first copy the sector file to the new location:
 
 ```shell
 rsync -avP <source> <destination>
+```
+```output
 sending incremental file list
 s-t01024-1
 [......]
 sent 537,002,093 bytes  received 35 bytes  358,001,418.67 bytes/sec
 total size is 536,870,912  speedup is 1.00
 ```
+
 2. Redeclare the sector(s) in the new storage path.
 
 ```shell
@@ -159,6 +179,8 @@ You should now be able to see that the sectors has been redeclared in the new pa
 
 ```shell
 rsync -avP --remove-source-files <old-path> <backup-destination>
+```
+```output
 sending incremental file list
 sealed/
 sealed/s-t01024-1

@@ -4,32 +4,32 @@
   weight = 10
 
 [[main]]
-  name = "Developers"
-  url = "/developers/glif-nodes"
-  weight = 20
-
-[[main]]
   name = "Storage Providers"
   url = "/storage-providers/get-started/overview"
-  weight = 30
+  weight = 20
 
 [[main]]
   name = "Tutorials"
   url = "/tutorials/lotus/store-and-retrieve/set-up/"
-  weight = 40
+  weight = 30
 
 [[main]]
   name = "Reference"
   url = "/reference/basics/overview/"
   identifier = "reference"
-  weight = 50
+  weight = 40
 
 [[main]]
   name = "Knowledge Base"
   url = "/kb"
   identifier = "kb"
-  weight = 60
+  weight = 50
 
+[[main]]
+  name = "Blog"
+  url = "/blog"
+  identifier = "blog"
+  weight = 60
 
 
 [[lotus]]
@@ -39,28 +39,28 @@
   url = "/lotus/get-started/what-is-lotus"
 
 [[lotus]]
-  name = "Install"
+  name = "Setup"
   weight = 20
   identifier = "lotus-install"
   url = "/lotus/install"
 
-[[lotus]]
-  name = "Configure"
-  weight = 30
-  identifier = "lotus-configure"
-  url = "/lotus/lotus-configure"
-
-[[lotus]]
+  [[lotus]]
   name = "Manage"
-  weight = 40
+  weight = 30
   identifier = "lotus-management"
   url = "/lotus/manage"
 
 [[lotus]]
-  name = "Project"
+  name = "Advanced Configurations"
+  weight = 40
+  identifier = "lotus-configure"
+  url = "/lotus/lotus-configure"
+
+[[lotus]]
+  name = "Developers"
   weight = 50
-  identifier = "project"
-  url = "/lotus/project"
+  identifier = "lotus-developers"
+  url = "/lotus/manage"
 
 
 

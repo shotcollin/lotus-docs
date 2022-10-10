@@ -29,13 +29,13 @@ Many Linux distributions provide their packages of the NVIDIA Linux Graphics Dri
     If you are using an nvidia driver below < `460.91.03`
     
     ```shell
-    export BELLMAN_CUSTOM_GPU="GeForce RTX 3090:10496"
+    export RUST_GPU_TOOLS_CUSTOM_GPU="GeForce RTX 3090:10496"
     ```
     
     If you are using an Nvidia driver above > `510.47.03`
     
     ```shell
-    export BELLMAN_CUSTOM_GPU="NVIDIA GeForce RTX 3090:10496"
+    export RUST_GPU_TOOLS_CUSTOM_GPU="NVIDIA GeForce RTX 3090:10496"
     ```
     
 Nvidia RTX 3090 was used in this example. Remember to edit it with your GPU and amount of Cuda cores.
@@ -60,7 +60,7 @@ Nvidia RTX 3090 was used in this example. Remember to edit it with your GPU and 
 1. We need to add the newly installed CUDA to the PATH environment variable for the Linux User that will compile and run the Lotus:
     
     ```shell
-    echo -e 'export PATH=$PATH:/usr/local/cuda-11.6/bin \n export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.6/lib64` >> ~/.bashrc && source ~/.bashrc
+    echo -e `export PATH=$PATH:/usr/local/cuda-11.6/bin \n export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.6/lib64` >> ~/.bashrc && source ~/.bashrc
     ```
 
 1. Reboot the system for the changes to take effect and verify that the new CUDA toolkit and Nvidia driver versions are in use:

@@ -4,14 +4,15 @@ description: "Running a Filecoin network locally can be extremely useful for dev
 lead: "Running a Filecoin network locally can be extremely useful for developers wanting to build and test their applications. This page provides guidance on different methods to run a Filecoin network locally."
 draft: false
 menu:
-    developers:
-        parent: "developers-networks"
+    lotus:
+        parent: "lotus-developers"
         identifier: "developers-networks-local-network"
 weight: 305
 toc: true
 aliases:
     - /docs/developers/developer-network
     - /docs/developers/local-network/
+    - /developers/local-network/
 ---
 
 You can spin up a local network (local-net) using the regular Lotus binaries. This method will launch Lotus using 2 KiB sectors, allowing systems with fewer resources to run a local-net. This solution runs comfortably on a computer with 2 CPU cores and 4 GB RAM.
@@ -68,10 +69,10 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 #### Go
 
-To build Lotus, you need a working installation of [Go 1.17.9 or higher](https://golang.org/dl/):
+To build Lotus, you need a working installation of [Go 1.18.1 or higher](https://golang.org/dl/):
 
 ```shell
-wget -c https://golang.org/dl/go1.17.9.linux-amd64.tar.gz -O - | sudo tar -xz -C /usr/local
+wget -c https://golang.org/dl/go1.18.1.linux-amd64.tar.gz -O - | sudo tar -xz -C /usr/local
 ```
 
 {{< alert icon="tip">}}
@@ -178,7 +179,7 @@ Local-nets use slightly different binaries to those used in the Filecoin mainnet
    # if you need a specific release use 
    git checkout <tag_or_release>
    # For example:
-   git checkout v1.17.0 # tag for a release
+   # git checkout v1.17.0 # tag for a release
    ```
 
 4. Remove any existing repositories.
@@ -309,3 +310,19 @@ Now that you've got everything setup, you can start the `lotus` and `lotus-miner
 
 You now have a fully functioning Filecoin local network! You can start testing your setup and playing with the Filecoin network in a safe and fast environment.
 
+### Connect multiple nodes
+
+To add additional nodes to your local network, copy the `devgen.car` in your lotus-local-net folder to the other nodes.
+
+
+1. Start the nodes with:
+
+```shell
+./lotus daemon  --genesis=devgen.car
+```
+
+2. Connect it to the first node:
+
+```shell
+./lotus net connect MULTIADDR_OF_THE_FIRST_SERVER
+```
